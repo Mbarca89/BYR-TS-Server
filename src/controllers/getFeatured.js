@@ -1,17 +1,17 @@
 const { Properties, Images } = require('../db');
 
-const getFeatured = async (req,res) => {
+const getFeatured = async (req, res) => {
     try {
         const result = await Properties.findAll({
-            attributes: ['id'],
-            where: {featured:true},
+            attributes: ['id', 'name', 'location'],
+            where: { featured: true },
             include: [
                 {
-                  model: Images,
-                  as: 'images',
-                  attributes: ['url'],
+                    model: Images,
+                    as: 'images',
+                    attributes: ['url'],
                 },
-              ],
+            ],
         })
         return res.status(200).json(result)
     } catch (error) {
@@ -19,4 +19,4 @@ const getFeatured = async (req,res) => {
     }
 }
 
-module.exports = {getFeatured}
+module.exports = { getFeatured }
