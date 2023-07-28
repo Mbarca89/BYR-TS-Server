@@ -6,7 +6,7 @@ const { conn } = require('./src/db');
 
 const server = app.listen  (PORT, async () => {
     console.log(`Server raised in port: ${PORT}`)
-    await conn.sync({force: false})
+    await conn.sync({alter: true})
 })
 
 module.exports = server
