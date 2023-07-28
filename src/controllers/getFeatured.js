@@ -3,7 +3,7 @@ const { Properties, Images } = require('../db');
 const getFeatured = async (req, res) => {
     try {
         const result = await Properties.findAll({
-            attributes: ['id', 'name', 'location'],
+            attributes: ['id', 'name', 'location', 'createdAt'],
             where: { featured: true },
             include: [
                 {

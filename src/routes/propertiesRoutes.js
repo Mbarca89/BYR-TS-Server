@@ -7,6 +7,7 @@ const {editProperty} = require('../controllers/editProperty')
 const {deleteProperty} = require('../controllers/deleteProperty')
 const {deleteImage} = require('../controllers/deleteImage')
 const {getPropertyList} = require('../controllers/getPropertyList')
+const {getLastProperties} = require('../controllers/getLastProperties')
 
 const propertiesRoutes = Router();
 
@@ -16,6 +17,7 @@ propertiesRoutes.delete('/delete/image',deleteImage)
 propertiesRoutes.delete('/delete/:id',deleteProperty)
 propertiesRoutes.get('/',getProperties)
 propertiesRoutes.get('/featured',getFeatured)
+propertiesRoutes.get('/last',getLastProperties)
 propertiesRoutes.get('/list',getPropertyList)
 propertiesRoutes.get('/detail/:id',getProperty)
 
