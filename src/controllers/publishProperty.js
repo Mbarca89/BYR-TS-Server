@@ -1,7 +1,7 @@
 const { Properties, Images } = require('../db');
 const path = require('path');
 const fs = require('fs');
-const {SERVER_URL} = process.env
+const {SERVER_URL, WEB_URL} = process.env
 
 const publishProperty = async (req, res) => {
   try {
@@ -42,7 +42,7 @@ const publishProperty = async (req, res) => {
           return res.status(500).send(error);
         }
       });
-      const imageUrl = `${SERVER_URL}/${imagePath}`
+      const imageUrl = `${WEB_URL}/${imagePath}`
       const urlOk = imageUrl.split('/').filter(item => item !=='public').join('/').replace("\\","/")
       await Images.create({propertyId:result.id,url:urlOk,name:image.name})
     });
