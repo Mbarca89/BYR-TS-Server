@@ -36,7 +36,7 @@ const publishProperty = async (req, res) => {
       }
     })    
     images.forEach(async (image) => {
-      const imagePath = path.join(folderPath, image.name).replace("\\","/"); // Ruta completa al archivo de destino
+      const imagePath = path.join(folderPath, image.name.replace(/ /g, '_')).replace("\\","/"); // Ruta completa al archivo de destino
       image.mv(imagePath, (error) => {
         if (error) {
           return res.status(500).send(error);
