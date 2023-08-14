@@ -44,7 +44,7 @@ const publishProperty = async (req, res) => {
       });
       const imageUrl = `${WEB_URL}/${imagePath}`
       const urlOk = imageUrl.split('/').filter(item => item !=='public').join('/').replace("\\","/")
-      await Images.create({propertyId:result.id,url:urlOk.replace(/ /g, '%20'),name:image.name})
+      await Images.create({propertyId:result.id,url:urlOk.replace(/ /g, '_'),name:image.name})
     });
     return res.status(200).send('Propiedad cargada con exito!')
   } catch (error) {
