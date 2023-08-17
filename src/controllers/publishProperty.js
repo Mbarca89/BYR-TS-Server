@@ -36,14 +36,14 @@ const publishProperty = async (req, res) => {
       }
     })    
     images.forEach(async (image) => {
-      const imagePath = path.join(folderPath, image.name.replace(/[ ()]/g, '_')).replace("\\","/"); // Ruta completa al archivo de destino
+      const imagePath = path.join(folderPath, image.name.replace(/[ ()]/g, '_').toLowerCase()).replace("\\","/"); // Ruta completa al archivo de destino
       image.mv(imagePath, (error) => {
         if (error) {
           return res.status(500).send(error);
         }
       });
       const imageUrl = `${WEB_URL}/${imagePath}`
-      const urlOk = imageUrl.split('/').filter(item => item !=='public').join('/').replace("\\","/")
+      const urlOk = imageUrl.split('/').filter(item => item !=='public').join('/').replace("\\","/").toLowerCase()
       await Images.create({propertyId:result.id,url:urlOk.replace(/ /g, '_'),name:image.name})
     });
     return res.status(200).send('Propiedad cargada con exito!')
