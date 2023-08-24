@@ -1,7 +1,7 @@
 const { Properties, Images } = require('../db');
 const path = require('path');
 const fs = require('fs');
-const {SERVER_URL} = process.env
+const {SERVER_URL, WEB_URL} = process.env
 
 const editProperty = async (req,res) => {
     const { id } = req.params;
@@ -35,15 +35,15 @@ const editProperty = async (req,res) => {
       const folderPath = path.join('public/', property.id.toString());
 
       if(images.length > 1){images.forEach(async (image) => {
-        const imagePath = path.join(folderPath, image.name).replace("\\","/"); // Ruta completa al archivo de destino
+        const imagePath = path.join(folderPath, image.name.replace(/[ ()]/g, '_').toLowerCase()).replace("\\","/"); // Ruta completa al archivo de destino
         image.mv(imagePath, (error) => {
           if (error) {
             throw Error (error.message);
           }
         });
-        const imageUrl = `${SERVER_URL}/${imagePath}`
-        const urlOk = imageUrl.split('/').filter(item => item !=='public').join('/')
-        await Images.create({propertyId:property.id,url:urlOk,name:image.name})
+        const imageUrl = `${WEB_URL}/${imagePath}`
+        const urlOk = imageUrl.split('/').filter(item => item !=='public').join('/').replace("\\","/").toLowerCase()
+        await Images.create({propertyId:property.id,url:urlOk.replace(/ /g, '_'),name:image.name})
       });}
       return res.status(200).send('Propiedad actualizada con exito!')
     } catch (error) {
